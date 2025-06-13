@@ -4,6 +4,7 @@ import LoginPage from './components/LoginPage';
 import RegisterPage from './components/RegisterPage';
 import Home from './components/Home';
 import About from './components/About';
+import Homain from './components/Homain';
 
 function App() {
   return (
@@ -21,10 +22,11 @@ function App() {
 
         <main className="flex-grow p-6">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Homain />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
+            <Route path="/home" element={<Home />} />
           </Routes>
         </main>
 
