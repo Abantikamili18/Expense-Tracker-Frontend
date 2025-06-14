@@ -2,9 +2,9 @@ import React from 'react';
 
 const Balance = ({ balance }) => {
   return (
-    <div className="bg-white p-4 rounded shadow mb-4">
-      <h3 className="text-lg font-semibold text-gray-700">Your Balance</h3>
-      <p className="text-2xl font-bold text-gray-900">₹{balance}</p>
+    <div className="rounded-2xl bg-white/80 shadow-sm border border-gray-200 px-6 py-5 flex flex-col items-center">
+      <span className="text-xs uppercase tracking-widest text-gray-400 mb-1">Balance</span>
+      <span className="text-3xl font-bold text-gray-800">₹{balance}</span>
     </div>
   );
 };

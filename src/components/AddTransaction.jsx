@@ -17,65 +17,75 @@ const AddTransaction = ({ onAdd }) => {
   const [amount, setAmount] = useState('');
   const [description, setDescription] = useState('');
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [type, setType] = useState('Income');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!text || !amount) return;
-
+    let amt = Math.abs(parseFloat(amount));
+    if (type === 'Expense') amt = -amt;
     onAdd({
       id: Date.now(),
       text,
-      amount: parseFloat(amount),
-      description
+      amount: amt,
+      description,
+      date: new Date().toISOString()
     });
-
     setText('');
     setAmount('');
     setDescription('');
+    setType('Income');
   };
 
   return (
-    <div className="bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 p-6 rounded-2xl shadow-xl mb-6 border border-blue-200 animate-fade-in">
-      <h3 className="text-2xl font-extrabold mb-4 text-blue-700 font-mono tracking-tight drop-shadow-lg">Add New Transaction</h3>
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Category dropdown */}
-        <div className="relative">
-          <button
-            type="button"
-            className="w-full px-4 py-2 border rounded-lg bg-white text-left shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 flex justify-between items-center font-sans"
-            onClick={() => setDropdownOpen((open) => !open)}
+    <div className="rounded-2xl bg-white/80 shadow-sm border border-gray-200 px-6 py-5 mb-2">
+      <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-3">Add Transaction</h3>
+      <form onSubmit={handleSubmit} className="space-y-3">
+        <div className="flex gap-2">
+          <select
+            className="flex-1 px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-200 text-sm"
+            value={type}
+            onChange={e => setType(e.target.value)}
           >
-            {text || 'Select Category'}
-            <svg className="w-5 h-5 ml-2 text-blue-500" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" /></svg>
-          </button>
-          <ul className={`absolute left-0 right-0 mt-2 bg-white rounded-lg shadow-lg z-10 transition-all duration-200 ${dropdownOpen ? 'block' : 'hidden'}`}>
-            {categories.map((cat) => (
-              <li
-                key={cat}
-                className={`px-4 py-2 cursor-pointer hover:bg-blue-100 ${text === cat ? 'font-bold text-blue-600' : ''}`}
-                onClick={() => { setText(cat); setDropdownOpen(false); }}
-              >
-                {cat}
-              </li>
-            ))}
-          </ul>
+            <option value="Income">Income</option>
+            <option value="Expense">Expense</option>
+          </select>
+          <div className="relative flex-1">
+            <button
+              type="button"
+              className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white text-left text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-purple-200"
+              onClick={() => setDropdownOpen((open) => !open)}
+            >
+              {text || 'Select Category'}
+            </button>
+            <ul className={`absolute left-0 right-0 mt-1 bg-white rounded-lg border border-gray-100 shadow z-10 max-h-40 overflow-y-auto ${dropdownOpen ? 'block' : 'hidden'}`}>
+              {categories.map((cat) => (
+                <li
+                  key={cat}
+                  className={`px-3 py-2 cursor-pointer hover:bg-blue-50 ${text === cat ? 'font-bold text-blue-600' : ''}`}
+                  onClick={() => { setText(cat); setDropdownOpen(false); }}
+                >
+                  {cat}
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
-        {/* Description input */}
         <input
           type="text"
           placeholder="Description"
-          className="w-full px-4 py-2 border rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400 font-sans"
+          className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-blue-200"
           value={description}
           onChange={e => setDescription(e.target.value)}
         />
         <input
           type="number"
-          placeholder="Amount (negative = expense, positive = income)"
-          className="w-full px-4 py-2 border rounded-lg bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-pink-400 font-sans"
+          placeholder="Amount"
+          className="w-full px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-700 text-sm focus:outline-none focus:ring-2 focus:ring-green-200"
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
         />
-        <button type="submit" className="w-full py-2 rounded-lg bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-bold text-lg shadow-md hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-4 focus:ring-blue-200 flex items-center justify-center gap-2">
+        <button type="submit" className="w-full py-2 rounded-lg bg-blue-500 text-white font-semibold text-base shadow hover:bg-blue-600 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-200">
           Add Transaction
         </button>
       </form>
