@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import Balance from './Balance';
-import IncomeExpense from './IncomeExpense';
-import AddTransaction from './AddTransaction';
-import TransactionList from './TransactionList';
+import Balance from '../components/Balance';
+import IncomeExpense from '../components/IncomeExpense';
+import AddTransaction from '../components/AddTransaction';
+import TransactionList from '../components/TransactionList';
 
-const Home = () => {
+const Dashboard = () => {
   const [transactions, setTransactions] = useState([]);
 
   const addTransaction = (txn) => {
@@ -35,4 +35,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default Dashboard;

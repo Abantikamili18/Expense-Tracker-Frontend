@@ -1,36 +1,28 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import LoginPage from './components/LoginPage';
-import RegisterPage from './components/RegisterPage';
-import Home from './components/Home';
-import About from './components/About';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Header from "./components/Header";
+import Home from "./pages/Home";
+import About from "./pages/About";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Dashboard from "./pages/Dashboard";
+import Footer from "./components/Footer";
 
 function App() {
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
-        <header className="bg-blue-600 text-white px-6 py-4 flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Expense Tracker</h1>
-          <nav className="space-x-4">
-            <Link to="/" className="hover:underline">Home</Link>
-            <Link to="/about" className="hover:underline">About</Link>
-            <Link to="/login" className="hover:underline">Login</Link>
-            <Link to="/register" className="hover:underline">Register</Link>
-          </nav>
-        </header>
-
+        <Header/>
         <main className="flex-grow p-6">
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home/>} />
             <Route path="/about" element={<About />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/dashboard" element={<Dashboard />} />
           </Routes>
         </main>
-
-        <footer className="bg-gray-800 text-white text-center py-4">
-          <p>&copy; {new Date().getFullYear()} Expense Tracker</p>
-        </footer>
+        <Footer />
       </div>
     </Router>
   );

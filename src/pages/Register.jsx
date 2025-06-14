@@ -1,7 +1,7 @@
 // RegisterPage.jsx
 import React from 'react';
 
-const RegisterPage = () => {
+const Register = () => {
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded shadow">
       <h2 className="text-xl font-bold mb-4">Register</h2>
@@ -13,4 +13,4 @@ const RegisterPage = () => {
   );
 };
 
-export default RegisterPage;
+export default Register;

@@ -1,7 +1,7 @@
 // LoginPage.jsx
 import React from 'react';
 
-const LoginPage = () => {
+const Login = () => {
   return (
     <div className="max-w-md mx-auto bg-white p-6 rounded shadow">
       <h2 className="text-xl font-bold mb-4">Login</h2>
@@ -12,4 +12,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;
