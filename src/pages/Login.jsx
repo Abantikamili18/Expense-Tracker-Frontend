@@ -13,7 +13,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-[80vh] flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 animate-gradient-x font-[Poppins]">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-100 via-purple-100 to-pink-100 animate-gradient-x font-[Poppins]">
       <div className="relative w-full max-w-md p-8 bg-white/90 rounded-3xl shadow-2xl backdrop-blur-md border border-blue-100">
         <div className="absolute -top-10 left-1/2 -translate-x-1/2 w-20 h-20 bg-gradient-to-tr from-blue-400 via-purple-400 to-pink-400 rounded-full shadow-lg flex items-center justify-center">
           <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" d="M16 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" /><circle cx="12" cy="7" r="4" /></svg>

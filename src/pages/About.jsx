@@ -2,7 +2,7 @@ import React from 'react'
 
 const About = () => {
   return (
-    <div className="w-full h-full min-h-[60vh] flex flex-col justify-center items-center p-8 bg-gradient-to-br from-blue-50 to-purple-100 animate-fadeIn">
+    <div className="w-full h-full min-h-screen flex flex-col justify-center items-center p-8 bg-gradient-to-br from-blue-50 to-purple-100 animate-fadeIn">
       <h2 className="text-7xl font-extrabold text-blue-700 mb-8 tracking-wide drop-shadow animate-bounce">About Expense Tracker</h2>
       <p className="text-3xl text-gray-700 mb-10 max-w-4xl text-justify font-light animate-fadeIn delay-200">
         <span role="img" aria-label="wallet">💸</span> Welcome to your personal Expense Tracker! This app empowers you to take control of your finances with a modern, easy-to-use interface. Effortlessly add, view, and manage your transactions, and always stay on top of your budget.
