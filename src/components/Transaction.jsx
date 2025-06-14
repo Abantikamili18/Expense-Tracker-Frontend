@@ -3,10 +3,20 @@ import React from 'react';
 const Transaction = ({ transaction, onDelete }) => {
   const sign = transaction.amount < 0 ? '-' : '+';
   const color = transaction.amount < 0 ? 'text-red-500' : 'text-green-500';
+  // Format date as DD/MM/YYYY
+  let dateStr = '';
+  if (transaction.date) {
+    const d = new Date(transaction.date);
+    dateStr = `${d.getDate().toString().padStart(2, '0')}/${(d.getMonth()+1).toString().padStart(2, '0')}/${d.getFullYear()}`;
+  }
 
   return (
     <li className="flex justify-between items-center py-2">
-      <span className="text-gray-700 font-medium">{transaction.text}</span>
+      <div className="flex flex-col">
+        <span className="text-gray-700 font-medium">{transaction.text}</span>
+        {dateStr && <span className="text-xs text-gray-400">{dateStr}</span>}
+        {transaction.description && <span className="text-xs text-gray-500 italic">{transaction.description}</span>}
+      </div>
       <div className="flex items-center gap-3">
         <span className={`font-semibold ${color}`}>
           {sign}₹{Math.abs(transaction.amount)}

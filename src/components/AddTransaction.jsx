@@ -28,7 +28,8 @@ const AddTransaction = ({ onAdd }) => {
       id: Date.now(),
       text,
       amount: amt,
-      description
+      description,
+      date: new Date().toISOString()
     });
     setText('');
     setAmount('');
