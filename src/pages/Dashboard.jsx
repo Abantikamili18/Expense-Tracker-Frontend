@@ -26,11 +26,13 @@ const Dashboard = () => {
   const balance = income - expense;
 
   return (
-    <div className="max-w-xl mx-auto">
-      <Balance balance={balance} />
-      <IncomeExpense income={income} expense={expense} />
-      <AddTransaction onAdd={addTransaction} />
-      <TransactionList transactions={transactions} onDelete={deleteTransaction} />
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex flex-col items-center py-10 px-2">
+      <div className="w-full max-w-lg space-y-6">
+        <Balance balance={balance} />
+        <IncomeExpense income={income} expense={expense} />
+        <AddTransaction onAdd={addTransaction} />
+        <TransactionList transactions={transactions} onDelete={deleteTransaction} />
+      </div>
     </div>
   );
 };
