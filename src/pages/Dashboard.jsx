@@ -8,7 +8,7 @@ const Dashboard = () => {
   const [transactions, setTransactions] = useState([]);
 
   const addTransaction = (txn) => {
-    setTransactions([txn, ...transactions]);
+    setTransactions([txn, ...transactions].slice(0, 5));
   };
 
   const deleteTransaction = (id) => {

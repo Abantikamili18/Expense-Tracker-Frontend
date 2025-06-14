@@ -11,7 +11,7 @@ const Home = () => {
         <p className="text-2xl md:text-3xl text-gray-700 mb-8 font-medium animate-fade-in">
           Track your expenses, set budgets, and stay on top of your financial goals.
         </p>
-        <Link to="/login" className="px-10 py-4 bg-blue-600 text-white text-2xl rounded-xl shadow-lg hover:bg-blue-700 transition animate-fade-in">Get Started</Link>
+        <Link to="/register" className="px-10 py-4 bg-blue-600 text-white text-2xl rounded-xl shadow-lg hover:bg-blue-700 transition animate-fade-in">Get Started</Link>
       </section>
 
       {/* Features */}
