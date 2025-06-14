@@ -12,16 +12,14 @@ function App() {
   return (
     <Router>
       <div className="min-h-screen flex flex-col">
-        <Header/>
-        <main className="flex-grow p-6">
-          <Routes>
-            <Route path="/" element={<Home/>} />
-            <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<Dashboard />} />
-          </Routes>
-        </main>
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+        </Routes>
         <Footer />
       </div>
     </Router>
