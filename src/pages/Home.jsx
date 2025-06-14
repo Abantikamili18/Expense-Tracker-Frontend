@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-const Homain = () => {
+const Home = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-100 to-purple-100 flex flex-col">
       {/* Hero Section */}
@@ -35,4 +35,4 @@ const Homain = () => {
   )
 }
 
-export default Homain
+export default Home
