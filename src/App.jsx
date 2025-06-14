@@ -11,10 +11,11 @@ import Footer from "./components/Footer";
 function App() {
   return (
     <Router>
-        <Header/>
-        <main className="flex-grow p-6">
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-1 p-6">
           <Routes>
-            <Route path="/" element={<Home/>} />
+            <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
@@ -22,6 +23,7 @@ function App() {
           </Routes>
         </main>
         <Footer />
+      </div>
     </Router>
   );
 }
