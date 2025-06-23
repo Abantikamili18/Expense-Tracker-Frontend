@@ -1,15 +1,24 @@
-// LoginPage.jsx
+// Login.jsx
 import React, { useState } from 'react';
+import axios from '../api/axios';
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const [username, setuser] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => setLoading(false), 1200); // fake loading
+    try {
+      const res = await axios.post('user/login/', { username, password });
+      localStorage.setItem('token', res.data.token);
+      window.location.href = '/dashboard';
+    } catch (error) {
+      alert("Invalid credentials");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -21,12 +30,12 @@ const Login = () => {
         <h2 className="text-3xl font-extrabold text-center mb-8 font-mono tracking-tight text-blue-700 drop-shadow-lg animate-fade-in">Login</h2>
         <form onSubmit={handleSubmit} className="space-y-6 animate-fade-in">
           <div>
-            <label className="block text-sm font-semibold text-gray-700 mb-1">Email</label>
+            <label className="block text-sm font-semibold text-gray-700 mb-1">Username</label>
             <input
-              type="email"
-              value={email}
-              onChange={e => setEmail(e.target.value)}
-              placeholder="Enter your email"
+              type="text"
+              value={username}
+              onChange={e => setuser(e.target.value)}
+              placeholder="Enter your Username"
               className="w-full px-4 py-2 rounded-lg border border-blue-200 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-200 bg-white/90 font-sans shadow-sm"
               required
             />

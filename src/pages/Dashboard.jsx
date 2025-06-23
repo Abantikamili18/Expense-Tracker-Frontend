@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+// Dashboard.jsx
+import React, { useState, useEffect } from 'react';
 import Balance from '../components/Balance';
 import IncomeExpense from '../components/IncomeExpense';
 import AddTransaction from '../components/AddTransaction';
 import TransactionList from '../components/TransactionList';
+import { fetchTransactions, addTransaction, deleteTransaction } from '../api/transaction';
 
-// RecentCategoriesList component: shows last 5 categories used in separate boxes
 const RecentCategoriesList = ({ transactions }) => {
-  // Get last 5 unique categories (most recent first)
   const seen = new Set();
   const recentCategories = transactions
-    .map(txn => txn.text)
+    .map(txn => txn.title)
     .filter(cat => {
       if (seen.has(cat)) return false;
       seen.add(cat);
@@ -17,18 +17,16 @@ const RecentCategoriesList = ({ transactions }) => {
     })
     .slice(0, 5);
 
-  // For each recent category, calculate total price, count, and type
   const getCategoryInfo = (cat) => {
-    const txns = transactions.filter(txn => txn.text === cat);
-    const total = txns.reduce((acc, txn) => acc + txn.amount, 0);
+    const txns = transactions.filter(txn => txn.title === cat);
+    const total = txns.reduce((acc, txn) => acc + Number(txn.amount), 0);
     const count = txns.length;
     const type = total >= 0 ? 'Income' : 'Expense';
     return { total, count, type };
   };
 
-  // Calculate total income and total expense for progress bars
-  const totalIncome = transactions.filter(t => t.amount > 0).reduce((acc, t) => acc + t.amount, 0) || 1;
-  const totalExpense = transactions.filter(t => t.amount < 0).reduce((acc, t) => acc + Math.abs(t.amount), 0) || 1;
+  const totalIncome = transactions.filter(t => Number(t.amount) > 0).reduce((acc, t) => acc + Number(t.amount), 0);
+  const totalExpense = transactions.filter(t => Number(t.amount) < 0).reduce((acc, t) => acc + Math.abs(Number(t.amount)), 0);
 
   return (
     <div className="w-72 min-w-64 space-y-6">
@@ -39,15 +37,15 @@ const RecentCategoriesList = ({ transactions }) => {
         </div>
       ) : (
         <div className="flex flex-col gap-6">
-          {recentCategories.map((cat, index) => {
+          {recentCategories.map((cat) => {
             const { total, count, type } = getCategoryInfo(cat);
             const percent = type === 'Income'
               ? Math.round((total / totalIncome) * 100)
               : Math.round((Math.abs(total) / totalExpense) * 100);
             return (
-              <div 
-                key={cat} 
-                className={`rounded-2xl bg-gradient-to-br from-white via-gray-50 to-blue-50 shadow-lg border border-gray-200 px-6 py-6 hover:shadow-2xl transition-shadow duration-200 hover:bg-white flex flex-col gap-2`}
+              <div
+                key={cat}
+                className="rounded-2xl bg-gradient-to-br from-white via-gray-50 to-blue-50 shadow-lg border border-gray-200 px-6 py-6 hover:shadow-2xl transition-shadow duration-200 hover:bg-white flex flex-col gap-2"
               >
                 <div className="flex items-center justify-between mb-2">
                   <span className="text-lg font-semibold text-gray-800 truncate flex-1">{cat}</span>
@@ -79,17 +77,33 @@ const RecentCategoriesList = ({ transactions }) => {
 const Dashboard = () => {
   const [transactions, setTransactions] = useState([]);
 
-  const addTransaction = (txn) => {
-    setTransactions([txn, ...transactions].slice(0, 5));
+  useEffect(() => {
+    fetchTransactions()
+      .then(setTransactions)
+      .catch(console.error);
+  }, []);
+
+  const handleAddTransaction = async (txn) => {
+    try {
+      const newTxn = await addTransaction(txn);
+      setTransactions(prev => [newTxn, ...prev]);
+    } catch (err) {
+      console.error('Add failed:', err);
+    }
   };
 
-  const deleteTransaction = (id) => {
-    setTransactions(transactions.filter((txn) => txn.id !== id));
+  const handleDeleteTransaction = async (id) => {
+    try {
+      await deleteTransaction(id);
+      setTransactions(prev => prev.filter(txn => txn.id !== id));
+    } catch (err) {
+      console.error('Delete failed:', err); 
+    }
   };
 
   const income = transactions
     .filter((t) => t.amount > 0)
-    .reduce((acc, t) => acc + t.amount, 0);
+    .reduce((acc, t) => acc + Number(t.amount), 0);
 
   const expense = transactions
     .filter((t) => t.amount < 0)
@@ -98,15 +112,16 @@ const Dashboard = () => {
   const balance = income - expense;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex flex-col items-center py-10 px-2">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 flex flex-col items-center py-10 px-2 animate-fade-in">
       <div className="w-full max-w-4xl flex gap-6">
         {/* Left: Main dashboard */}
         <div className="flex-1 space-y-6">
           <Balance balance={balance} />
           <IncomeExpense income={income} expense={expense} />
-          <AddTransaction onAdd={addTransaction} />
-          <TransactionList transactions={transactions} onDelete={deleteTransaction} />
+          <AddTransaction onAdd={handleAddTransaction} />
+          <TransactionList transactions={transactions} onDelete={handleDeleteTransaction} />
         </div>
+
         {/* Right: Recent Categories */}
         <RecentCategoriesList transactions={transactions} />
       </div>

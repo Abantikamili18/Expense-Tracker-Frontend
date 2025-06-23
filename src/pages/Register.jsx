@@ -1,5 +1,6 @@
-// RegisterPage.jsx
+// Register.jsx
 import React, { useState } from 'react';
+import axios from '../api/axios';
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -7,10 +8,18 @@ const Register = () => {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => setLoading(false), 1200); // fake loading
+    try {
+      await axios.post('user/create/', { username: name, email, password });
+      alert("Registration successful. Now login.");
+      window.location.href = '/login';
+    } catch (err) {
+      alert("Registration failed.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
